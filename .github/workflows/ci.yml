@@ -41,7 +41,7 @@ jobs:
             ${{ runner.os }}-php-${{ matrix.php-version }}-composer-
 
       - name: Install dependencies
-        run: composer install --no-interaction --prefer-dist
+        run: composer update --no-interaction --prefer-dist
 
       - name: PHP Lint
         run: find ai-gateway-plugin.php includes/ uninstall.php -name "*.php" -exec php -l {} \;
