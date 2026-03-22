@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-test:
+    name: PHP ${{ matrix.php-version }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['8.1', '8.2', '8.3', '8.4']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: json, hash, mbstring
+          tools: composer:v2
+          coverage: none
+
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-php-${{ matrix.php-version }}-composer-${{ hashFiles('composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-php-${{ matrix.php-version }}-composer-
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: PHP Lint
+        run: find ai-gateway-plugin.php includes/ uninstall.php -name "*.php" -exec php -l {} \;
+
+      - name: PHPCS
+        run: composer phpcs
+
+      - name: PHPStan
+        if: matrix.php-version == '8.4'
+        run: |
+          cat > phpstan-ci.neon << 'NEON'
+          parameters:
+              level: 5
+              paths:
+                  - ai-gateway-plugin.php
+                  - includes/
+                  - uninstall.php
+              excludePaths:
+                  - tests/
+                  - vendor/
+              bootstrapFiles:
+                  - phpstan/stubs.php
+                  - vendor/php-stubs/acf-pro-stubs/acf-pro-stubs.php
+          NEON
+          vendor/bin/phpstan analyse --configuration=phpstan-ci.neon --memory-limit=512M
+
+      - name: PHPUnit
+        run: composer test

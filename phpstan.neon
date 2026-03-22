@@ -1,0 +1,15 @@
+parameters:
+    level: 5
+    paths:
+        - ai-gateway-plugin.php
+        - includes/
+        - uninstall.php
+    excludePaths:
+        - tests/
+        - vendor/
+    scanDirectories:
+        - /Users/theduyet/Sites/aetv-local/wp-includes/
+        - /Users/theduyet/Sites/aetv-local/wp-admin/includes/
+    bootstrapFiles:
+        - phpstan/stubs.php
+        - vendor/php-stubs/acf-pro-stubs/acf-pro-stubs.php

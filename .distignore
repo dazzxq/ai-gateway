@@ -1,0 +1,40 @@
+# Development files
+.git
+.gitignore
+.distignore
+.editorconfig
+.phpcs.xml
+.phpcs.xml.dist
+phpstan.neon
+phpstan.neon.dist
+phpunit.xml
+phpunit.xml.dist
+composer.json
+composer.lock
+package.json
+package-lock.json
+
+# Documentation (dev-only)
+CONTRIBUTING.md
+SECURITY.md
+CHANGELOG.md
+API-SPEC.md
+TROUBLESHOOTING.md
+SECURITY-AUDIT.md
+docs/
+
+# Test and CI files
+tests/
+.github/
+.planning/
+
+# IDE and OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Dependencies (dev-only)
+vendor/
+stubs/
+node_modules/
