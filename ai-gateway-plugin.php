@@ -177,11 +177,7 @@ spl_autoload_register(
 			// Underscore-separated: Admin_Controller -> admin-controller.
 			$file_name = strtolower( str_replace( '_', '-', $class_name ) );
 		} else {
-			// CamelCase: insert hyphens before uppercase letters, handle acronym runs.
-			// ACFManager -> ACF-Manager -> acf-manager
-			// PostController -> Post-Controller -> post-controller
-			// PHPLinter -> PHP-Linter -> php-linter
-			// ResponseFormatter -> Response-Formatter -> response-formatter
+			// CamelCase to kebab-case: ACFManager -> acf-manager, PostController -> post-controller.
 			$file_name = preg_replace( '/([A-Z]+)([A-Z][a-z])/', '$1-$2', $class_name );
 			$file_name = preg_replace( '/([a-z])([A-Z])/', '$1-$2', $file_name );
 			$file_name = strtolower( $file_name );

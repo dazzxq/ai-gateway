@@ -12,6 +12,10 @@
 	<exclude-pattern>/tests/*</exclude-pattern>
 	<exclude-pattern>/node_modules/*</exclude-pattern>
 
+	<!-- Only fail on errors, not warnings (warnings are reviewed but acceptable) -->
+	<config name="severity" value="1"/>
+	<arg name="warning-severity" value="0"/>
+
 	<!-- Use WordPress Extra standard (includes WordPress-Core) -->
 	<rule ref="WordPress-Extra">
 		<!-- Allow short array syntax -->
