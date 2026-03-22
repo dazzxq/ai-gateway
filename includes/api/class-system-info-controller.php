@@ -40,7 +40,7 @@ class SystemInfoController {
 	 *
 	 * @var AuditLogger
 	 */
-	private $audit_logger;
+	private $audit_logger; // @phpstan-ignore property.onlyWritten
 
 	/**
 	 * Constructor
