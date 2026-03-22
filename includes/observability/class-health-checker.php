@@ -123,7 +123,7 @@ class HealthChecker {
 	private function check_filesystem() {
 		try {
 			$upload_dir = wp_upload_dir();
-			if ( isset( $upload_dir['basedir'] ) && is_writable( $upload_dir['basedir'] ) ) {
+			if ( is_writable( $upload_dir['basedir'] ) ) {
 				return array(
 					'status'  => 'ok',
 					'message' => 'Filesystem write accessible',
