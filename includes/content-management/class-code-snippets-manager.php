@@ -199,7 +199,7 @@ class CodeSnippetsManager {
 		}
 
 		// Validate PHP syntax.
-		$lint_result = $this->linter->lint_content( $data['code'] );
+		$lint_result = $this->linter->lint_content( "<?php\n" . $data['code'] );
 		if ( is_wp_error( $lint_result ) ) {
 			$error = new WP_Error(
 				'invalid_php_syntax',
@@ -297,7 +297,7 @@ class CodeSnippetsManager {
 
 		// Validate PHP syntax if code is being updated.
 		if ( isset( $data['code'] ) && ! empty( $data['code'] ) ) {
-			$lint_result = $this->linter->lint_content( $data['code'] );
+			$lint_result = $this->linter->lint_content( "<?php\n" . $data['code'] );
 			if ( is_wp_error( $lint_result ) ) {
 				$error = new WP_Error(
 					'invalid_php_syntax',
